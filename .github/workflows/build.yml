@@ -34,10 +34,9 @@ jobs:
       - name: Install OpenCV with Macports
         if: matrix.os == 'macos-latest'
         run: | 
-          curl -O https://github.com/macports/macports-base/releases/download/v2.7.1/MacPorts-2.7.1-10.15-Catalina.pkg
-          chmod 755 MacPorts-2.7.1-10.15-Catalina.pkg
+          curl -JOL https://github.com/macports/macports-base/releases/download/v2.7.1/MacPorts-2.7.1-10.15-Catalina.pkg
           ls -lah
-          sudo installer -verbose -pkg MacPorts-2.7.1-10.15-Catalina.pkg -target /
+          sudo installer -L -pkg MacPorts-2.7.1-10.15-Catalina.pkg -target /
           sudo port install opencv4
           
       - name: Compile With CMake   
