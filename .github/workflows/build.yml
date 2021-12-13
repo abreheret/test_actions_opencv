@@ -49,6 +49,7 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: install opencv
+        run: |
    
 # Compile :
 
