@@ -46,22 +46,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: install MSVC (Windows)
         uses: ilammy/msvc-dev-cmd@v1.4.1        
-        
-      - name: install CMake  
-        uses: lukka/get-cmake@latest   
-        
-      - name: Install OpenCV (Windows)
         uses: crazy-max/ghaction-chocolatey@v1
-        with:
-          args: install opencv
+
+      - name: Install CMake and OpenCV
+        run: |
+          choco install cmake
+          choco install opencv
+
+      - name: print path opencv install
+        run: |
+          dir "C:\tools"
+          dir "C:\tools\opencv"
+          dir "C:\tools\opencv\build"
 
       - name: Compile With CMake   
         run: |
           mkdir build
           cd build
-          cmake .. -DOpenCV_DIR=%OPENCV_DIR%
+          cmake -DOpenCV_DIR=C:\tools\opencv\build ..
           cmake --build .
           
           
