@@ -3,11 +3,11 @@ on: [push]
 
 
 jobs:
-  ubuntu-mac:
+  Main:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest] #, macos-latest]
         
     steps:
       - name: Checkout
@@ -59,7 +59,6 @@ jobs:
 
       - name: Compile With CMake   
         run: |
-          set OPENCV_DIR=C:\tools\opencv\build
           mkdir build
           cd build
           cmake .. -DOpenCV_DIR=%OPENCV_DIR%
