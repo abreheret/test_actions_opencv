@@ -1,0 +1,69 @@
+name: build
+on: [push]
+
+
+jobs:
+  main:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+#Compiler
+#      - name: install GCC (Ubuntu)
+#        if: matrix.os == 'ubuntu-latest'
+#        name: Set up GCC
+#        uses: egor-tensin/setup-gcc@v1
+        
+      - name: install MSVC (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: ilammy/msvc-dev-cmd@v1.4.1        
+
+# CMake 
+      - name: install CMake  
+        uses: lukka/get-cmake@latest       
+
+# Qt install
+#      - name: Install Qt
+#        uses: jurplel/install-qt-action@v2
+
+# OPENCV
+      - name: Install OpenCV (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install libopencv-dev
+
+      - name: Install OpenCV (MacOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install opencv
+          
+      - name: Install OpenCV (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install opencv
+   
+# Compile :
+
+      - name: Compile With CMake   
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+   
+   
+# Upload Result
+#    - name: upload executable
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: ${{matrix.os}}
+#        path: |
+#          ouputnamefile
