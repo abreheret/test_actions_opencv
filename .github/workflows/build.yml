@@ -26,11 +26,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install libopencv-dev
 
-      - name: Install OpenCV (MacOS)
+      # - name: Install OpenCV (MacOS)
+        # if: matrix.os == 'macos-latest'
+        # run: |
+          # brew update
+          # brew install opencv
+      - name: Install OpenCV with Macports
         if: matrix.os == 'macos-latest'
-        run: |
-          brew update
-          brew install opencv
+        run: | 
+          curl -O https://github.com/macports/macports-base/releases/download/v2.7.1/MacPorts-2.7.1-10.15-Catalina.pkg
+          sudo installer -pkg MacPorts-2.7.1-10.15-Catalina.pkg -target /
+          sudo port install opencv4
           
       - name: Compile With CMake   
         run: |
