@@ -3,25 +3,15 @@ on: [push]
 
 
 jobs:
-  main:
+  ubuntu-mac:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-#Compiler
-#      - name: install GCC (Ubuntu)
-#        if: matrix.os == 'ubuntu-latest'
-#        name: Set up GCC
-#        uses: egor-tensin/setup-gcc@v1
-        
-      - name: install MSVC (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: ilammy/msvc-dev-cmd@v1.4.1        
 
 # CMake 
       - name: install CMake  
@@ -31,7 +21,6 @@ jobs:
 #      - name: Install Qt
 #        uses: jurplel/install-qt-action@v2
 
-# OPENCV
       - name: Install OpenCV (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -44,24 +33,39 @@ jobs:
           brew update
           brew install opencv
           
-      - name: Install OpenCV (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: crazy-max/ghaction-chocolatey@v1
-        with:
-          args: install opencv
-        run: |
-          set OPENCV_DIR=C:\tools\opencv\build
-   
-# Compile :
-
       - name: Compile With CMake   
         run: |
           mkdir build
           cd build
           cmake ..
           cmake --build .
-   
-   
+          
+  Windows:
+    runs-on:windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: install MSVC (Windows)
+        uses: ilammy/msvc-dev-cmd@v1.4.1        
+        
+      - name: install CMake  
+        uses: lukka/get-cmake@latest   
+        
+      - name: Install OpenCV (Windows)
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install opencv
+
+      - name: Compile With CMake   
+        run: |
+          set OPENCV_DIR=C:\tools\opencv\build
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+          
+          
 # Upload Result
 #    - name: upload executable
 #      uses: actions/upload-artifact@v2
