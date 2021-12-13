@@ -41,7 +41,7 @@ jobs:
           cmake --build .
           
   Windows:
-    runs-on:windows-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
