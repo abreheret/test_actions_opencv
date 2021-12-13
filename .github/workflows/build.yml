@@ -62,7 +62,7 @@ jobs:
           set OPENCV_DIR=C:\tools\opencv\build
           mkdir build
           cd build
-          cmake ..
+          cmake .. -DOpenCV_DIR=%OPENCV_DIR%
           cmake --build .
           
           
