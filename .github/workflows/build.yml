@@ -35,7 +35,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: | 
           curl -JOL https://github.com/macports/macports-base/releases/download/v2.7.1/MacPorts-2.7.1-10.15-Catalina.pkg
-          ls -lah
+          ls -lah / 
+          ls -lah /Applications
           sudo installer -pkg MacPorts-2.7.1-10.15-Catalina.pkg -target /
           sudo port install opencv4
           
