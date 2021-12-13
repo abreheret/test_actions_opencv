@@ -44,13 +44,17 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ilammy/msvc-dev-cmd@v1.4.1        
-      - uses: crazy-max/ghaction-chocolatey@v1
+      - uses: ilammy/msvc-dev-cmd@v1.4.1     
+      
+      - name: Install OpenCV (Windows)
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install opencv cmake
 
-      - name: Install CMake and OpenCV
-        run: |
-          choco install cmake
-          choco install opencv
+      # - name: Install CMake and OpenCV
+        # run: |
+          # choco install cmake
+          # choco install opencv
 
       - name: print path opencv install
         run: |
