@@ -50,6 +50,7 @@ jobs:
         with:
           args: install opencv
         run: |
+          set OPENCV_DIR=C:\tools\opencv\build
    
 # Compile :
 
