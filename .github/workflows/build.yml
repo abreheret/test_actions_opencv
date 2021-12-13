@@ -7,13 +7,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-# CMake 
       - name: install CMake  
         uses: lukka/get-cmake@latest       
 
@@ -38,7 +37,7 @@ jobs:
           mkdir build
           cd build
           cmake ..
-          cmake --build .
+          cmake --build . --config Release
           
   Windows:
     runs-on: windows-latest
@@ -52,25 +51,20 @@ jobs:
       - name: Install OpenCV (Windows)
         uses: crazy-max/ghaction-chocolatey@v1
         with:
-          args: install opencv #cmake
+          args: install opencv 
 
-      # - name: Install CMake and OpenCV
+      # - name: print path opencv install
         # run: |
-          # choco install cmake
-          # choco install opencv
-
-      - name: print path opencv install
-        run: |
-          dir "C:\tools"
-          dir "C:\tools\opencv"
-          dir "C:\tools\opencv\build"
+          # dir "C:\tools"
+          # dir "C:\tools\opencv"
+          # dir "C:\tools\opencv\build"
 
       - name: Compile With CMake   
         run: |
           mkdir build
           cd build
           cmake -DOpenCV_DIR=C:\tools\opencv\build ..
-          cmake --build .
+          cmake --build . --config Release
           
           
 # Upload Result
