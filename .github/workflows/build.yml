@@ -43,11 +43,9 @@ jobs:
   Windows:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        
-        uses: ilammy/msvc-dev-cmd@v1.4.1        
-        uses: crazy-max/ghaction-chocolatey@v1
+      - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1.4.1        
+      - uses: crazy-max/ghaction-chocolatey@v1
 
       - name: Install CMake and OpenCV
         run: |
